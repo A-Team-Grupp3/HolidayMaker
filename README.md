@@ -1,5 +1,5 @@
 # HolidayMaker
-###En webapplikation för att hitta ditt nästa semesterboende
+### En webapplikation för att hitta ditt nästa semesterboende
 
 ## Komma igång
 För att komma igång skriv in följande i Git Bash
