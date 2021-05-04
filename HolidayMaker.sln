@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolidayMakerGrupp2", "HolidayMakerGrupp2\HolidayMakerGrupp2.csproj", "{1B561BED-491A-4C2E-AD14-6EAAA760EE52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,7 +14,24 @@ Global
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|x64.Build.0 = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Debug|x86.Build.0 = Debug|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|x64.Build.0 = Release|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|x86.ActiveCfg = Release|Any CPU
+		{1B561BED-491A-4C2E-AD14-6EAAA760EE52}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AA95A55-C377-4DF8-BF99-87A27BA6900B}
 	EndGlobalSection
 EndGlobal
