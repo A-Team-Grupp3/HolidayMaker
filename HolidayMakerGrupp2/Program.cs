@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HolidayMakerGrupp2.Data.Migrations;
+using HolidayMakerGrupp2.Models.Database;
 
 namespace HolidayMakerGrupp2
 {
@@ -13,6 +15,7 @@ namespace HolidayMakerGrupp2
     {
         public static void Main(string[] args)
         {
+            CreateDB();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -22,5 +25,14 @@ namespace HolidayMakerGrupp2
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void CreateDB()
+        {
+            using (var context = new HolidayMakerGrupp2Context())
+            {
+                context.Database.EnsureCreated();
+                context.SaveChanges();
+            }
+        }
     }
 }

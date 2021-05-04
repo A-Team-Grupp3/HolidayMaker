@@ -1,4 +1,5 @@
 using HolidayMakerGrupp2.Data;
+using HolidayMakerGrupp2.Models.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,8 @@ namespace HolidayMakerGrupp2
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDbContext<HolidayMakerGrupp2Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DataConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
