@@ -18,13 +18,31 @@ namespace HolidayMakerGrupp2.Services
         public IEnumerable<Accomodation>SearchByCity(string city)
         {
             //IEnumerable<Accomodation> accomodation;
-            var cityId = _context.Cities.Where(c => c.Name.Contains(city));
-            List<City> result = cityId.ToList();
-            foreach  (var accomodation in result)
+            var cityId = _context.Cities.Where(c => c.Name.Contains(city)).Single<City>();
+            var living = _context.Accomodations.ToList();
+            for (int i = 0; i < living.Count; ++i)
             {
-                accomodation.Name = _context.Cities.Where(c => c.Name.Contains());
+                if (living[i].CityId != cityId.Id)
+                {
+                    living.RemoveAt(i);
+                }
             }
-            return result;
+
+            return living;
         }
+
+        //public IEnumerable<Accomodation> SearchByCity(string city)
+        //{
+        //    //IEnumerable<Accomodation> accomodation;
+        //    var cityId = _context.Accomodations.Where(c => c.City.Name == city);
+        //    List<Accomodation> result = cityId.ToList();
+        //    foreach (var accomodation in result)
+        //    {
+        //        accomodation.CityId = _context.Cities.Where(p => p.Name == cityId);
+        //    }
+
+        //    return result;
+
+        //}
     }
 }
