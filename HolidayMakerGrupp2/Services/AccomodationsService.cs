@@ -14,5 +14,29 @@ namespace HolidayMakerGrupp2.Services
         {
 
         }
+
+        public IEnumerable<Accomodation> Get()
+        {
+            return ctx.Accomodations.ToList();
+        }
+
+        public IEnumerable<Accomodation> GetById(int id)
+        {
+            var accomodations = ctx.Accomodations.Where(c => c.Id == id);
+
+            return accomodations;
+        }
+
+        //public IEnumerable<Accomodation> GetByName(string name)
+        //{
+        //    if (string.IsNullOrWhiteSpace(name))
+        //    {
+        //        return ctx.Accomodations.ToList();
+        //    }
+        //    else
+        //    {
+        //        return ctx.Accomodations.Where(p => p.Name.ToLower.Contains(name).ToList());
+        //    }
+        //}
     }
 }
