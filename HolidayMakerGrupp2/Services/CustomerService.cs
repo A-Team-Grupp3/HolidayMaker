@@ -77,27 +77,35 @@ namespace HolidayMakerGrupp2.Services
 
         public void ChangeCustomer(int id, Customer customer)
         {
-            Customer oldCustomer = (Customer)ctx.Customers.Where(c => c.Id == id);
+            var oldCustomer = ctx.Customers.Find(id);
 
             if (oldCustomer.Firstname != customer.Firstname)
             {
                 oldCustomer.Firstname = customer.Firstname;
             }
-            else if (oldCustomer.Lastname != customer.Lastname)
+            if (oldCustomer.Lastname != customer.Lastname)
             {
                 oldCustomer.Lastname = customer.Lastname;
             }
-            else if (oldCustomer.Email != customer.Email)
+            if (oldCustomer.Email != customer.Email)
             {
                 oldCustomer.Email = customer.Email;
             }
-            else if (oldCustomer.Address != customer.Address)
+            if (oldCustomer.Address != customer.Address)
             {
                 oldCustomer.Address = customer.Address;
             }
-            else if (oldCustomer.City != customer.City)
+            if (oldCustomer.City != customer.City)
             {
                 oldCustomer.City = customer.City;
+            }
+            if (oldCustomer.PhoneNr != customer.PhoneNr)
+            {
+                oldCustomer.PhoneNr = customer.PhoneNr;
+            }
+            if (oldCustomer.Zipcode != customer.Zipcode)
+            {
+                oldCustomer.Zipcode = customer.Zipcode;
             }
             ctx.SaveChanges();
         }

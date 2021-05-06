@@ -48,21 +48,23 @@ namespace HolidayMakerGrupp2.APIControllers
             }
         }
 
-        [HttpGet]
-        public IEnumerable<Customer> GetById(int id)
-        {
-            return cService.GetById(id);
-        }
+        //[HttpGet]
+        //public IEnumerable<Customer> GetById(int id)
+        //{
+        //    return cService.GetById(id);
+        //}
 
         [HttpPut]
-        public void UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city)
+        public void UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city, string phonenr, int zipcode)
         {
             Customer customer = new Customer() { 
                 Firstname = firstname, 
                 Lastname = lastName,
                 Email = email,
                 Address = address, 
-                City = city };
+                City = city,
+                PhoneNr = phonenr, 
+                Zipcode = zipcode};
             cService.ChangeCustomer(id, customer);
         }
 
