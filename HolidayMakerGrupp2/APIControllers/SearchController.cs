@@ -17,6 +17,19 @@ namespace HolidayMakerGrupp2.APIControllers
         private readonly SearchService searchService = new SearchService(new Models.Database.HolidayMakerGrupp2Context());
 
         // GET: api/<SearchController>
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
+
+        //// GET api/<SearchController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
         [HttpGet]
         public IEnumerable<string> Get()
         {
