@@ -14,7 +14,7 @@ namespace HolidayMakerGrupp2.APIControllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly SearchService searchService = new SearchService(new Models.Database.HolidayMakerGrupp2Context());
+        private readonly SearchService searchService = new SearchService();
 
         // GET: api/<SearchController>
         //[HttpGet]

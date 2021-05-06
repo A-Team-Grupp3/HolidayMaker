@@ -12,7 +12,7 @@ namespace HolidayMakerGrupp2.Services
 
         public SearchService()
         {
-            
+
         }
 
         public IEnumerable<Accomodation>SearchByCity(string city)
