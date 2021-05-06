@@ -54,6 +54,18 @@ namespace HolidayMakerGrupp2.APIControllers
             return cService.GetById(id);
         }
 
+        [HttpPut]
+        public void UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city)
+        {
+            Customer customer = new Customer() { 
+                Firstname = firstname, 
+                Lastname = lastName,
+                Email = email,
+                Address = address, 
+                City = city };
+            cService.ChangeCustomer(id, customer);
+        }
+
         //private readonly HolidayMakerGrupp2Context _context;
 
         //public CustomersController(HolidayMakerGrupp2Context context)
