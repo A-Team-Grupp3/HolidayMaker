@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-HolidayMakerGrupp2-5947966D-D9E1-491D-8B04-1FDC6CBE2A3E</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1030,</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Controllers\WebApi\**" />
     <Content Remove="Controllers\WebApi\**" />
