@@ -17,14 +17,11 @@ namespace HolidayMakerGrupp2.Services
 
         public IEnumerable<Accomodation>SearchByCity(string city)
         {
-            //IEnumerable<Accomodation> accomodation;
-            var cityId = _context.Cities.Where(c => c.Name.Contains(city));
-            List<City> result = cityId.ToList();
-            foreach  (var accomodation in result)
-            {
-                accomodation.Name = _context.Cities.Where(c => c.Name.Contains());
-            }
-            return result;
+            
+            var cityId = _context.Cities.Where(c => c.Name == city).Select(c => c.Id).FirstOrDefault();
+            var acc = _context.Accomodations.Where(a => a.CityId == cityId);
+            return acc;
+            
         }
     }
 }
