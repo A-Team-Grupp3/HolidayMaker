@@ -8,27 +8,35 @@ namespace HolidayMakerGrupp2.Services
 {
     public class SearchService
     {
-        private readonly HolidayMakerGrupp2Context _context;
+        private HolidayMakerGrupp2Context _context = new HolidayMakerGrupp2Context();
 
-        public SearchService(HolidayMakerGrupp2Context ctx)
+        public SearchService()
         {
-            _context = ctx;
+            
         }
 
         public IEnumerable<Accomodation>SearchByCity(string city)
         {
             //IEnumerable<Accomodation> accomodation;
-            var cityId = _context.Cities.Where(c => c.Name.Contains(city)).Single<City>();
+            var cityId = _context.Cities.Where(c => c.Name == city).Single<City>();
             var living = _context.Accomodations.ToList();
-            for (int i = 0; i < living.Count; ++i)
+            List<Accomodation> result = new List<Accomodation>();
+            //for (int i = 0; i < living.Count; ++i)
+            //{
+            //    if (living[i].CityId != cityId.Id)
+            //    {
+            //        living.RemoveAt(i);
+            //    }
+            //}
+            foreach (var place in living)
             {
-                if (living[i].CityId != cityId.Id)
+                if (place.CityId == cityId.Id)
                 {
-                    living.RemoveAt(i);
+                    result.Add(place);
                 }
             }
 
-            return living;
+            return result;
         }
 
         //public IEnumerable<Accomodation> SearchByCity(string city)

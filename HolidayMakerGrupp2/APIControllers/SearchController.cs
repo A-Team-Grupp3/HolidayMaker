@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HolidayMakerGrupp2.Models.Database;
+using HolidayMakerGrupp2.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +14,26 @@ namespace HolidayMakerGrupp2.APIControllers
     [ApiController]
     public class SearchController : ControllerBase
     {
+        private SearchService sService = new SearchService();
         // GET: api/<SearchController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
-        // GET api/<SearchController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        //// GET api/<SearchController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
+        [HttpGet]
+        public IEnumerable<Accomodation> Get(string city)
         {
-            return "value";
+            var acomodations = sService.SearchByCity(city);
+            return acomodations;
         }
 
         
