@@ -14,22 +14,6 @@ namespace HolidayMakerGrupp2.APIControllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly SearchService searchService = new SearchService();
-
-        // GET: api/<SearchController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<SearchController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -38,13 +22,9 @@ namespace HolidayMakerGrupp2.APIControllers
 
         // GET api/<SearchController>/5
         [HttpGet("{city}")]
-        public IEnumerable<Accomodation>GetByCity(string city)
+        public async Task<IEnumerable<Accomodation>> GetByCity(string city)
         {
-            return searchService.SearchByCity(city);
-            
+            return await SearchService.SearchByCity(city);
         }
-
-        
-        
     }
 }
