@@ -49,7 +49,7 @@ namespace HolidayMakerGrupp2.Services
             
         }
 
-        public static async Task<int> CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
+        public static async Task<int> CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice, int roomId)
         {
             using var ctx = new HolidayMakerGrupp2Context();
             
@@ -70,17 +70,21 @@ namespace HolidayMakerGrupp2.Services
                     TotalPrice = totPrice
                 });
                 ctx.SaveChanges();
+                var roomBooking = ctx.RoomInBookings.AddAsync(new RoomInBooking { BookingId = createdOrder.Entity.Id, RoomId = roomId});
+                ctx.SaveChanges();
+               
                 return createdOrder.Entity.Id;
             
         }
 
-        public static async Task<int> ChangeBooking(int id, Booking booking)
+        public static async Task<int> ChangeBooking(int id, Booking booking, int roomId, int newRoomId)
         {
             using var ctx = new HolidayMakerGrupp2Context();
             
 
 
                 var oldBooking = await ctx.Bookings.FindAsync(id);
+                var oldroomInBooking = await ctx.RoomInBookings.FindAsync(id, roomId);
 
                 if (oldBooking.ArrivalDate != booking.ArrivalDate)
                 {
@@ -105,6 +109,14 @@ namespace HolidayMakerGrupp2.Services
                 if (oldBooking.ComfortId != booking.ComfortId)
                 {
                     oldBooking.ComfortId = booking.ComfortId;
+                }
+                if (oldBooking.TransportationId != booking.TransportationId)
+                {
+                    oldBooking.TransportationId = booking.TransportationId;
+                }
+                if (oldBooking.Id == oldroomInBooking.BookingId && oldroomInBooking.RoomId != newRoomId)
+                {
+                oldroomInBooking = new RoomInBooking() { BookingId = oldBooking.Id, RoomId = newRoomId };
                 }
                 ctx.SaveChanges();
                 return oldBooking.Id;
