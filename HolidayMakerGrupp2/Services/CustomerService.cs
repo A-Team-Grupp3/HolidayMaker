@@ -9,23 +9,24 @@ namespace HolidayMakerGrupp2.Services
     public static class CustomerService
     {
         private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
-        
 
         
 
-        public static IEnumerable<Customer> Get()
+
+        public static async Task<IEnumerable<Customer>> Get()
         {
-            return ctx.Customers.ToList();
+
+            return await ctx.Customers.AsAsyncEnumerable().ToListAsync();
         }
 
-        public static IEnumerable<Customer> GetById(int id)
+        public static async Task<IEnumerable<Customer>> GetById(int id)
         {
-            var customer = ctx.Customers.Where(c => c.Id == id);
+            var customer = ctx.Customers.AsAsyncEnumerable().Where(c => c.Id == id).ToListAsync();
 
-            return customer;
+            return await customer;
         }
 
-        public static IEnumerable<Customer> GetByName(string name)
+        public static async Task<IEnumerable<Customer>> GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -33,25 +34,25 @@ namespace HolidayMakerGrupp2.Services
             }
             else
             {
-                return ctx.Customers.Where(c => c.Firstname.ToLower().Contains(name)).ToList();
+                return await ctx.Customers.AsAsyncEnumerable().Where(c => c.Firstname.ToLower().Contains(name)).ToListAsync();
             }
         }
 
         //Oklar enligt Carl
-        public static string DeleteCustomer(int id)
+        public static async Task<Customer> DeleteCustomer(int id)
         {
-            var customerToDelete = ctx.Customers.Where(c => c.Id == id).Single<Customer>(); //Behövs single<Customer>?
+            var customerToDelete = await ctx.Customers.AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
             ctx.Customers.Remove(customerToDelete);
             ctx.SaveChanges();
-            return "Customer was succesfully Deleted"; //Ändras till något annat?
+            return customerToDelete; 
         }
 
-        public static int AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
+        public static async Task<int> AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
         {
             Guid g = Guid.NewGuid();
 
 
-            var createdCustomer = ctx.Customers.Add(new Customer
+            var createdCustomer = await ctx.Customers.AddAsync(new Customer
             {
 
 

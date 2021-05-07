@@ -17,8 +17,6 @@ namespace HolidayMakerGrupp2.Services
 
         public static int CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
         {
-            
-
 
             var createdOrder = ctx.Bookings.Add(new Booking
             {
