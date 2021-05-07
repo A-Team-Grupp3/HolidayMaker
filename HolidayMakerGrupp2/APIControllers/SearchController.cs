@@ -26,5 +26,10 @@ namespace HolidayMakerGrupp2.APIControllers
         {
             return await SearchService.SearchByCity(city);
         }
+        [HttpGet("{date}/{city}")]
+        public async Task<IEnumerable<Accomodation>> GetByDateAndCity(DateTime date, string city)
+        {
+            return await SearchService.SearchByDate(date, city);
+        }
     }
 }
