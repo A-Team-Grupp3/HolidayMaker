@@ -24,27 +24,27 @@ namespace HolidayMakerGrupp2.APIControllers
         }
 
         [HttpPost]
-        public int AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
+        public async Task<int> AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
         {
-            return CustomerService.AddCustomer(firstName, lastName, address, city, email, phoneNr, zipcode);
+            return await CustomerService.AddCustomer(firstName, lastName, address, city, email, phoneNr, zipcode);
         }
 
         [HttpDelete]
-        public string Delete(int id)
+        public async Task<Customer> Delete(int id)
         {
-            return CustomerService.DeleteCustomer(id);
+            return await CustomerService.DeleteCustomer(id);
         }
 
         [HttpGet]
-        public IEnumerable<Customer> Get(string name)
+        public async Task<IEnumerable<Customer>> Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return CustomerService.Get();
+                return await CustomerService.Get();
             }
             else
             {
-                return CustomerService.GetByName(name);
+                return await CustomerService .GetByName(name);
             }
         }
 
@@ -55,7 +55,7 @@ namespace HolidayMakerGrupp2.APIControllers
         //}
 
         [HttpPut]
-        public void UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city, string phonenr, int zipcode)
+        public async Task<int> UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city, string phonenr, int zipcode)
         {
             Customer customer = new Customer() { 
                 Firstname = firstname, 
@@ -65,7 +65,7 @@ namespace HolidayMakerGrupp2.APIControllers
                 City = city,
                 PhoneNr = phonenr, 
                 Zipcode = zipcode};
-            CustomerService.ChangeCustomer(id, customer);
+            return await CustomerService.ChangeCustomer(id, customer);
         }
 
         //private readonly HolidayMakerGrupp2Context _context;

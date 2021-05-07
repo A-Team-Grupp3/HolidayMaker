@@ -21,11 +21,11 @@ namespace HolidayMakerGrupp2.APIControllers
         }
 
         // GET: api/Accomodations
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Accomodation>>> GetAccomodations()
-        {
-            return await _context.Accomodations.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Accomodation>>> GetAccomodations()
+        //{
+        //    return await _context.Accomodations.ToListAsync();
+        //}
 
         // GET: api/Accomodations/5
         [HttpGet("{id}")]

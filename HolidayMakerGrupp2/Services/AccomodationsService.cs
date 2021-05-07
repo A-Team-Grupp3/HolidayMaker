@@ -17,12 +17,12 @@ namespace HolidayMakerGrupp2.Services
             return ctx.Accomodations.ToList();
         }
 
-        public static IEnumerable<Accomodation> GetById(int id)
-        {
-            var accomodations = ctx.Accomodations.Where(c => c.Id == id);
+        //public static IEnumerable<Accomodation> GetById(int id)
+        //{
+        //    var accomodations = ctx.Accomodations.Where(c => c.Id == id);
 
-            return accomodations;
-        }
+        //    return accomodations;
+        //}
 
         //public IEnumerable<Accomodation> GetByName(string name)
         //{
