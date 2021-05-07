@@ -15,7 +15,7 @@ namespace HolidayMakerGrupp2.APIControllers
     public class CustomersController : ControllerBase
     {
 
-        private CustomerService cService = new CustomerService();
+        
 
 
         public CustomersController()
@@ -26,13 +26,13 @@ namespace HolidayMakerGrupp2.APIControllers
         [HttpPost]
         public int AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
         {
-            return cService.AddCustomer(firstName, lastName, address, city, email, phoneNr, zipcode);
+            return CustomerService.AddCustomer(firstName, lastName, address, city, email, phoneNr, zipcode);
         }
 
         [HttpDelete]
         public string Delete(int id)
         {
-            return cService.DeleteCustomer(id);
+            return CustomerService.DeleteCustomer(id);
         }
 
         [HttpGet]
@@ -40,11 +40,11 @@ namespace HolidayMakerGrupp2.APIControllers
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return cService.Get();
+                return CustomerService.Get();
             }
             else
             {
-                return cService.GetByName(name);
+                return CustomerService.GetByName(name);
             }
         }
 
@@ -65,7 +65,7 @@ namespace HolidayMakerGrupp2.APIControllers
                 City = city,
                 PhoneNr = phonenr, 
                 Zipcode = zipcode};
-            cService.ChangeCustomer(id, customer);
+            CustomerService.ChangeCustomer(id, customer);
         }
 
         //private readonly HolidayMakerGrupp2Context _context;

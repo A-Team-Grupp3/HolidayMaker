@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace HolidayMakerGrupp2.Services
 {
-    public class AccomodationsService
+    public static class AccomodationsService
     {
-        private HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
+        private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
 
-        public AccomodationsService()
-        {
+        
 
-        }
-
-        public IEnumerable<Accomodation> Get()
+        public static IEnumerable<Accomodation> Get()
         {
             return ctx.Accomodations.ToList();
         }
 
-        public IEnumerable<Accomodation> GetById(int id)
+        public static IEnumerable<Accomodation> GetById(int id)
         {
             var accomodations = ctx.Accomodations.Where(c => c.Id == id);
 

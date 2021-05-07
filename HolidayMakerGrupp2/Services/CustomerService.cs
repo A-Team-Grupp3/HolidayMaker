@@ -6,30 +6,26 @@ using HolidayMakerGrupp2.Models.Database;
 
 namespace HolidayMakerGrupp2.Services
 {
-    public class CustomerService
+    public static class CustomerService
     {
-        private HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
+        private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
         
 
+        
 
-        public CustomerService()
-        {
-
-        }
-
-        public IEnumerable<Customer> Get()
+        public static IEnumerable<Customer> Get()
         {
             return ctx.Customers.ToList();
         }
 
-        public IEnumerable<Customer> GetById(int id)
+        public static IEnumerable<Customer> GetById(int id)
         {
             var customer = ctx.Customers.Where(c => c.Id == id);
 
             return customer;
         }
 
-        public IEnumerable<Customer> GetByName(string name)
+        public static IEnumerable<Customer> GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -42,7 +38,7 @@ namespace HolidayMakerGrupp2.Services
         }
 
         //Oklar enligt Carl
-        public string DeleteCustomer(int id)
+        public static string DeleteCustomer(int id)
         {
             var customerToDelete = ctx.Customers.Where(c => c.Id == id).Single<Customer>(); //Behövs single<Customer>?
             ctx.Customers.Remove(customerToDelete);
@@ -50,7 +46,7 @@ namespace HolidayMakerGrupp2.Services
             return "Customer was succesfully Deleted"; //Ändras till något annat?
         }
 
-        public int AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
+        public static int AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
         {
             Guid g = Guid.NewGuid();
 
@@ -75,7 +71,7 @@ namespace HolidayMakerGrupp2.Services
             return createdCustomer.Entity.Id;
         }
 
-        public void ChangeCustomer(int id, Customer customer)
+        public static void ChangeCustomer(int id, Customer customer)
         {
             var oldCustomer = ctx.Customers.Find(id);
 

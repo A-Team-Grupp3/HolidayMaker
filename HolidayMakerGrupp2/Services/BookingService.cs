@@ -6,16 +6,16 @@ using HolidayMakerGrupp2.Models.Database;
 
 namespace HolidayMakerGrupp2.Services
 {
-    public class BookingService
+    public static class BookingService
     {
-        private HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
+        private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
 
-        public BookingService()
-        {
+        //public BookingService()
+        //{
 
-        }
+        //}
 
-        public int CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
+        public static int CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
         {
             
 
@@ -38,7 +38,7 @@ namespace HolidayMakerGrupp2.Services
             return createdOrder.Entity.Id;
         }
 
-        public void ChangeBooking(int id, Booking booking)
+        public static void ChangeBooking(int id, Booking booking)
         {
             var oldBooking = ctx.Bookings.Find(id);
 
