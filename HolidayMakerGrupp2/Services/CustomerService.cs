@@ -72,9 +72,9 @@ namespace HolidayMakerGrupp2.Services
             return createdCustomer.Entity.Id;
         }
 
-        public static void ChangeCustomer(int id, Customer customer)
+        public static async Task<int> ChangeCustomer(int id, Customer customer)
         {
-            var oldCustomer = ctx.Customers.Find(id);
+            var oldCustomer = await ctx.Customers.FindAsync(id);
 
             if (oldCustomer.Firstname != customer.Firstname)
             {
@@ -105,6 +105,8 @@ namespace HolidayMakerGrupp2.Services
                 oldCustomer.Zipcode = customer.Zipcode;
             }
             ctx.SaveChanges();
+
+            return oldCustomer.Id;
         }
 
     }
