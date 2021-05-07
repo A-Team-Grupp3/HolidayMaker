@@ -15,10 +15,10 @@ namespace HolidayMakerGrupp2.Services
 
         //}
 
-        public static int CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
+        public static async Task<int> CreateBooking(int customerId, DateTime arrival, DateTime departure, int accomodationsId, int transportationsId, int numberOfGuests, int nrKids, bool extraBed, int comfortId, double totPrice)
         {
 
-            var createdOrder = ctx.Bookings.Add(new Booking
+            var createdOrder = await ctx.Bookings.AddAsync(new Booking
             {
                 CustomerId = customerId,
                 BookingDate = DateTime.Now,
@@ -36,9 +36,9 @@ namespace HolidayMakerGrupp2.Services
             return createdOrder.Entity.Id;
         }
 
-        public static void ChangeBooking(int id, Booking booking)
+        public static async Task<int> ChangeBooking(int id, Booking booking)
         {
-            var oldBooking = ctx.Bookings.Find(id);
+            var oldBooking = await ctx.Bookings.FindAsync(id);
 
             if (oldBooking.ArrivalDate != booking.ArrivalDate)
             {
@@ -65,6 +65,7 @@ namespace HolidayMakerGrupp2.Services
                 oldBooking.ComfortId = booking.ComfortId;
             }
             ctx.SaveChanges();
+            return oldBooking.Id;
         }
 
     }
