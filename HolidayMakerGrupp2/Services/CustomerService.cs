@@ -8,19 +8,22 @@ namespace HolidayMakerGrupp2.Services
 {
     public static class CustomerService
     {
-        private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
+        //private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
 
         
 
 
         public static async Task<IEnumerable<Customer>> Get()
         {
+            using var ctx = new HolidayMakerGrupp2Context();
 
             return await ctx.Customers.AsAsyncEnumerable().ToListAsync();
         }
 
         public static async Task<IEnumerable<Customer>> GetById(int id)
         {
+            using var ctx = new HolidayMakerGrupp2Context();
+
             var customer = ctx.Customers.AsAsyncEnumerable().Where(c => c.Id == id).ToListAsync();
 
             return await customer;
@@ -28,6 +31,8 @@ namespace HolidayMakerGrupp2.Services
 
         public static async Task<IEnumerable<Customer>> GetByName(string name)
         {
+            using var ctx = new HolidayMakerGrupp2Context();
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 return ctx.Customers.ToList();
@@ -41,6 +46,8 @@ namespace HolidayMakerGrupp2.Services
         //Oklar enligt Carl
         public static async Task<Customer> DeleteCustomer(int id)
         {
+            using var ctx = new HolidayMakerGrupp2Context();
+
             var customerToDelete = await ctx.Customers.AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
             ctx.Customers.Remove(customerToDelete);
             ctx.SaveChanges();
@@ -49,6 +56,8 @@ namespace HolidayMakerGrupp2.Services
 
         public static async Task<int> AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
         {
+            using var ctx = new HolidayMakerGrupp2Context();
+
             Guid g = Guid.NewGuid();
 
 
@@ -74,6 +83,8 @@ namespace HolidayMakerGrupp2.Services
 
         public static async Task<int> ChangeCustomer(int id, Customer customer)
         {
+            using var ctx = new HolidayMakerGrupp2Context();
+
             var oldCustomer = await ctx.Customers.FindAsync(id);
 
             if (oldCustomer.Firstname != customer.Firstname)
