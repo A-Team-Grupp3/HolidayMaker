@@ -9,7 +9,6 @@ namespace HolidayMakerGrupp2.Services
 {
     public static class SearchService
     {
-
         public static async Task<IEnumerable<Accomodation>> SearchByCity(string city)
         {
             using var _context = new HolidayMakerGrupp2Context();
@@ -18,29 +17,34 @@ namespace HolidayMakerGrupp2.Services
             return acc;
         }
 
-        public static async Task<IEnumerable<Accomodation>>SearchByDate(DateTime date, string city)
+        public static async Task<IEnumerable<Accomodation>> SearchByDate(DateTime date, string city)
         {
-
-
+            List<Accomodation> accomodations = new();
             using var _context = new HolidayMakerGrupp2Context();
             var acc = await _context.Accomodations.Where(c => c.City.Name == city).ToListAsync();
-            List<Accomodation> accomodations = new List<Accomodation>();
-            
-            foreach(var acco in acc)
+            // Iterera genom listan med boenden
+            foreach (var a in acc)
             {
-               foreach(var room in acco.Rooms)
-               {
-                    foreach(var rb in room.RoomInBookings)
-                    {
-                        if(rb.Booking.DepartureDate.CompareTo(date) < 0)
-                        {
-                            accomodations.Add(acco);
-                        }
-                    }
-               }
+                // kolla i databasen om antalet rum där ankomstdagen är samma som datumet är lika med max antal rum för boendet.
+                var roomsInBooking = await _context.RoomInBookings.Where(r => r.Room.Accomodations == a).Where(r => r.Booking.ArrivalDate == date).ToListAsync();
+                if (!(roomsInBooking.Count == a.NrOfRooms))
+                    accomodations.Add(a);
             }
-            return accomodations;
 
+            //foreach(var acco in acc)
+            //{
+            //   foreach(var room in acco.Rooms)
+            //   {
+            //        foreach(var rb in room.RoomInBookings)
+            //        {
+            //            if(rb.Booking.DepartureDate.CompareTo(date) < 0)
+            //            {
+            //                accomodations.Add(acco);
+            //            }
+            //        }
+            //   }
+            //}
+            return accomodations;
         }
     }
 }
