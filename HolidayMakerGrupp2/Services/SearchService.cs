@@ -12,7 +12,7 @@ namespace HolidayMakerGrupp2.Services
         public static async Task<IEnumerable<Accomodation>> SearchByCity(string city)
         {
             using var _context = new HolidayMakerGrupp2Context();
-            var acc = await _context.Accomodations.AsAsyncEnumerable().Where(c => c.City.Name == city).ToListAsync();
+            var acc = await _context.Accomodations.AsQueryable().Where(a => a.City.Name == city).ToListAsync();
 
             return acc;
         }
@@ -21,7 +21,7 @@ namespace HolidayMakerGrupp2.Services
         {
             List<Accomodation> accomodations = new();
             using var _context = new HolidayMakerGrupp2Context();
-            var acc = await _context.Accomodations.AsAsyncEnumerable().Where(c => c.City.Name == city).ToListAsync();
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).ToListAsync();
             // Iterera genom listan med boenden
             foreach (var a in acc)
             {
