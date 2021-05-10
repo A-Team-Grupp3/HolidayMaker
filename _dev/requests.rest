@@ -1,0 +1,36 @@
+GET https://localhost:44300/api/customers/16
+
+
+###
+
+POST https://localhost:44300/api/customers
+Content-Type: application/json
+
+   {
+    "Firstname" : "firstname",
+    "Lastname" : "lastName",
+    "Email" : "email",
+    "Address" : "address",
+    "City" : "city",
+    "PhoneNr" : "07424",
+    "Zipcode" : "21222"
+   }
+
+###
+
+PUT https://localhost:44300/api/customers/16
+Content-Type: application/json
+
+   {
+    "Firstname" : "stefan",
+    "Lastname" : "kläppe",
+    "Email" : "email",
+    "Address" : "address",
+    "City" : "city",
+    "PhoneNr" : "07424",
+    "Zipcode" : "21222"
+   }
+
+
+### 
+DELETE https://localhost:44300/api/customers/17
