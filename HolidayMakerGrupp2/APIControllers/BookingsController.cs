@@ -38,9 +38,10 @@ namespace HolidayMakerGrupp2.APIControllers
         }
 
         [HttpDelete]
-        public async Task<Booking> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return await BookingService.DeleteBooking(id);
+            var bookingId = await BookingService.DeleteBooking(id);
+            return Ok(bookingId);
         }
 
         [HttpPut]

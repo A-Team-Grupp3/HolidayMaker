@@ -27,6 +27,7 @@ namespace HolidayMakerGrupp2.Services
 
                 var bookings = await ctx.Bookings.AsAsyncEnumerable().Where(c => c.Id == id).ToListAsync();
 
+
                 return bookings;
             
         }
@@ -39,7 +40,7 @@ namespace HolidayMakerGrupp2.Services
 
                 var bookingToDelete = await ctx.Bookings.AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
                 ctx.Bookings.Remove(bookingToDelete);
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 return bookingToDelete;
             
         }
@@ -64,9 +65,9 @@ namespace HolidayMakerGrupp2.Services
                     ComfortId = comfortId,
                     TotalPrice = totPrice
                 });
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 var roomBooking = ctx.RoomInBookings.AddAsync(new RoomInBooking { BookingId = createdOrder.Entity.Id, RoomId = roomId});
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                
                 return createdOrder.Entity.Id;
             
@@ -113,7 +114,7 @@ namespace HolidayMakerGrupp2.Services
                 {
                 oldroomInBooking = new RoomInBooking() { BookingId = oldBooking.Id, RoomId = newRoomId };
                 }
-                ctx.SaveChanges();
+                await ctx.SaveChangesAsync();
                 return oldBooking.Id;
             
         }
