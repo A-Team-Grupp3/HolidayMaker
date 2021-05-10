@@ -10,30 +10,31 @@ namespace HolidayMakerGrupp2.Services
     {
         private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
 
-        
 
-        public static IEnumerable<Accomodation> Get()
+
+        public static async Task<IEnumerable<Accomodation>> Get()
         {
-            return ctx.Accomodations.ToList();
+            using var ctx = new HolidayMakerGrupp2Context();
+
+
+            return await ctx.Accomodations.AsAsyncEnumerable().ToListAsync();
+
+
         }
 
-        //public static IEnumerable<Accomodation> GetById(int id)
-        //{
-        //    var accomodations = ctx.Accomodations.Where(c => c.Id == id);
+        public static async Task<IEnumerable<Accomodation>> GetById(int id)
+        {
+            using var ctx = new HolidayMakerGrupp2Context();
 
-        //    return accomodations;
-        //}
 
-        //public IEnumerable<Accomodation> GetByName(string name)
-        //{
-        //    if (string.IsNullOrWhiteSpace(name))
-        //    {
-        //        return ctx.Accomodations.ToList();
-        //    }
-        //    else
-        //    {
-        //        return ctx.Accomodations.Where(p => p.Name.ToLower.Contains(name).ToList());
-        //    }
-        //}
+
+            var accomodation = await ctx.Accomodations.AsAsyncEnumerable().Where(c => c.Id == id).ToListAsync();
+
+
+            return accomodation;
+
+        }
+
+        
     }
 }
