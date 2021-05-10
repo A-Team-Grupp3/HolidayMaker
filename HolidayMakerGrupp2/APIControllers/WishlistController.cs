@@ -24,7 +24,7 @@ namespace HolidayMakerGrupp2.APIControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Wishlist>>> GetWishlists()
         {
-            return await _context.Wishlists.ToListAsync();
+            return await _context.Wishlists.AsAsyncEnumerable().ToListAsync();
         }
 
         // GET: api/Wishlist/5

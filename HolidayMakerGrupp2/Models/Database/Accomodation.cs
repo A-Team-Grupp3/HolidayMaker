@@ -24,6 +24,7 @@ namespace HolidayMakerGrupp2.Models.Database
         public bool Restaurants { get; set; }
         public double DistanceBeach { get; set; }
         public double DistanceDowntown { get; set; }
+        public string Name { get; set; }
 
         public virtual City City { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }

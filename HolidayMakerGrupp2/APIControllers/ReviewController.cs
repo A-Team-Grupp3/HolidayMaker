@@ -24,7 +24,7 @@ namespace HolidayMakerGrupp2.APIControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            return await _context.Reviews.ToListAsync();
+            return await _context.Reviews.AsAsyncEnumerable().ToListAsync();
         }
 
         // GET: api/Review/5

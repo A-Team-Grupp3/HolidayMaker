@@ -24,7 +24,7 @@ namespace HolidayMakerGrupp2.APIControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            return await _context.Bookings.ToListAsync();
+            return await _context.Bookings.AsAsyncEnumerable().ToListAsync();
         }
 
         // GET: api/Booking/5
