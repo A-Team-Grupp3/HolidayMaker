@@ -23,13 +23,25 @@ namespace HolidayMakerGrupp2.Services
             using var _context = new HolidayMakerGrupp2Context();
             var acc = await _context.Accomodations.AsAsyncEnumerable().Where(c => c.City.Name == city).ToListAsync();
             // Iterera genom listan med boenden
+            int bookedRoom = 0;
+
             foreach (var a in acc)
             {
-                // kolla i databasen om antalet rum där ankomstdagen är samma som datumet är lika med max antal rum för boendet.
-                var roomsInBooking = await _context.RoomInBookings.AsAsyncEnumerable().Where(r => r.Room.Accomodations == a).Where(r => r.Booking.ArrivalDate == date).ToListAsync();
-                if (!(roomsInBooking.Count == a.NrOfRooms))
+                foreach(var book in a.Bookings)
+                {
+                    if(book.ArrivalDate >= date && book.DepartureDate > date)
+                    {
+                        ++bookedRoom;
+                    }
+
+                }
+                if(bookedRoom < a.NrOfRooms)
+                {
                     accomodations.Add(a);
+                }
+                
             }
+
 
             return accomodations;
         }
