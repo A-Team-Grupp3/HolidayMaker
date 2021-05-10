@@ -31,19 +31,6 @@ namespace HolidayMakerGrupp2.Services
                     accomodations.Add(a);
             }
 
-            //foreach(var acco in acc)
-            //{
-            //   foreach(var room in acco.Rooms)
-            //   {
-            //        foreach(var rb in room.RoomInBookings)
-            //        {
-            //            if(rb.Booking.DepartureDate.CompareTo(date) < 0)
-            //            {
-            //                accomodations.Add(acco);
-            //            }
-            //        }
-            //   }
-            //}
             return accomodations;
         }
     }
