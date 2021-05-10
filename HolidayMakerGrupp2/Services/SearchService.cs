@@ -45,5 +45,40 @@ namespace HolidayMakerGrupp2.Services
 
             return accomodations;
         }
+
+        public static async Task<IEnumerable<Accomodation>>SearchByDate(DateTime arrivalDate, DateTime departureDate, string city)
+        {
+            List<Accomodation> accomodations = new();
+            using var _context = new HolidayMakerGrupp2Context();
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).ToListAsync();
+            // Iterera genom listan med boenden
+            int bookedRoom = 0;
+
+            foreach (var a in acc)
+            {
+                foreach (var room in a.Rooms)
+                {
+                    foreach (var rb in room.RoomInBookings)
+                    {
+                        if ((rb.Booking.ArrivalDate >= arrivalDate && rb.Booking.DepartureDate > arrivalDate) && 
+                            (rb.Booking.ArrivalDate >= departureDate && rb.Booking.DepartureDate > departureDate))
+                        {
+                            ++bookedRoom;
+                           
+                        }
+           
+                    }
+
+                }
+                if (bookedRoom < a.NrOfRooms)
+                {
+                    accomodations.Add(a);
+                }
+
+            }
+
+
+            return accomodations;
+        }
     }
 }
