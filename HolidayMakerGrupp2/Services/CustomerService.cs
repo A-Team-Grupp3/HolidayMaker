@@ -8,7 +8,7 @@ namespace HolidayMakerGrupp2.Services
 {
     public static class CustomerService
     {
-        //private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
+        
 
         
 

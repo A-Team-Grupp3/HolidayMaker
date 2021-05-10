@@ -8,12 +8,7 @@ namespace HolidayMakerGrupp2.Services
 {
     public static class BookingService
     {
-        //private static HolidayMakerGrupp2Context ctx = new HolidayMakerGrupp2Context();
-
-        //public BookingService()
-        //{
-
-        //}
+        
 
         public static async Task<IEnumerable<Booking>> Get()
         {
