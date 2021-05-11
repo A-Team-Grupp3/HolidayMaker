@@ -10,60 +10,66 @@ using HolidayMakerGrupp2.Services;
 
 namespace HolidayMakerGrupp2.APIControllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CustomersController : ControllerBase
-    {
+ [Route("api/[controller]")]
+ [ApiController]
+ public class CustomersController : ControllerBase
+ {
+  [HttpPost]
+  public async Task<IActionResult> AddCustomer(Customer customer)
+  {
+   var createdCustomer = await CustomerService.AddCustomer(customer);
+   if (createdCustomer != null)
+   {
+    return Created("", createdCustomer);
+   }
+   // TODO: gör mer specifik felhantering
+   return BadRequest();
+  }
 
-        
+  [HttpGet]
+  public async Task<IActionResult> Get(string name)
+  {
+   if (string.IsNullOrWhiteSpace(name))
+   {
+    return Ok(await CustomerService.Get());
+   }
+   else
+   {
+    return Ok(await CustomerService.GetByName(name));
+   }
+  }
 
+  [HttpGet("{id}")]
+  public async Task<IActionResult> Get(int id)
+  {
+   var customer = await CustomerService.GetById(id);
+   if (customer != null)
+   {
+    return Ok(customer);
+   }
+   return NotFound();
+  }
 
-        public CustomersController()
-        {
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdateCustomer(int id, Customer customer)
+  {
+   var updatedCustomer = await CustomerService.UpdateCustomer(id, customer);
+   if (updatedCustomer != null)
+   {
+    return Ok(updatedCustomer);
+   }
+   return NotFound();
+  }
 
-        }
-
-        [HttpPost]
-        public async Task<int> AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
-        {
-            return await CustomerService.AddCustomer(firstName, lastName, address, city, email, phoneNr, zipcode);
-        }
-
-        [HttpDelete]
-        public async Task<Customer> Delete(int id)
-        {
-            return await CustomerService.DeleteCustomer(id);
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<Customer>> Get(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return await CustomerService.Get();
-            }
-            else
-            {
-                return await CustomerService .GetByName(name);
-            }
-        }
-
-        
-
-        [HttpPut]
-        public async Task<int> UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city, string phonenr, int zipcode)
-        {
-            Customer customer = new Customer() { 
-                Firstname = firstname, 
-                Lastname = lastName,
-                Email = email,
-                Address = address, 
-                City = city,
-                PhoneNr = phonenr, 
-                Zipcode = zipcode};
-            return await CustomerService.ChangeCustomer(id, customer);
-        }
-
-        
-    }
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> Delete(int id)
+  {
+   var deletedCustomer = await CustomerService.DeleteCustomer(id);
+   if (deletedCustomer != null)
+   {
+    return Ok(deletedCustomer);
+   }
+   return BadRequest();
+  }
+ }
 }
