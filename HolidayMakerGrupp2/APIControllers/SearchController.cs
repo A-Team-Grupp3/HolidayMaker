@@ -55,61 +55,53 @@ namespace HolidayMakerGrupp2.APIControllers
 
         //api/search/byArrivalDate?arrivaldate=&city=
         [HttpGet("byArrivalDate")]
-        public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, string city)
-        {
-            return await SearchService.Search(arrivalDate, city);
-        }
-
-        //api/search/arrivalDeparture?arrivalDate=&departureDate=&city=
-        [HttpGet("arrivalDeparture")]
-        public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, DateTime departureDate, string city)
-        {
-            return await SearchService.Search(arrivalDate, departureDate, city);
-        }
-
-        [HttpGet("byArrivalAndDistance")]
         public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, string city, float distanceToBeach, float distanceToCity)
         {
             if (distanceToBeach != 0.0 && distanceToCity != 0.0)
             {
                 return await SearchService.Search(arrivalDate, city, distanceToBeach, distanceToCity);
             }
-            if (distanceToBeach != 0.0)
+            else if (distanceToBeach != 0.0)
             {
                 return await SearchService.Search(arrivalDate, city, distanceToBeach);
             }
-            if (distanceToCity != 0.0)
+            else if (distanceToCity != 0.0)
             {
                 return await SearchService.SearchByCity(arrivalDate, city, distanceToCity);
             }
             else
             {
-                return await SearchService.Search(city);
+                return await SearchService.Search(arrivalDate, city);
             }
-            
+
         }
 
-        [HttpGet("byArrivalDepartureAndDistance")]
+        //api/search/arrivalDeparture?arrivalDate=&departureDate=&city=
+        [HttpGet("arrivalDeparture")]
         public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, DateTime departureDate, string city, float distanceToBeach, float distanceToCity)
         {
             if (distanceToBeach != 0.0 && distanceToCity != 0.0)
             {
                 return await SearchService.Search(arrivalDate, departureDate, city, distanceToBeach, distanceToCity);
             }
-            if (distanceToBeach != 0.0)
+            else if (distanceToBeach != 0.0)
             {
                 return await SearchService.Search(arrivalDate, departureDate, city, distanceToBeach);
             }
-            if (distanceToCity != 0.0)
+            else if (distanceToCity != 0.0)
             {
                 return await SearchService.SearchDistanceToCity(arrivalDate, departureDate, city, distanceToCity);
             }
             else
             {
-                return await SearchService.Search(city);
+                return await SearchService.Search(arrivalDate,departureDate ,city);
             }
-
         }
+
+        
+        
+
+        
 
 
     }
