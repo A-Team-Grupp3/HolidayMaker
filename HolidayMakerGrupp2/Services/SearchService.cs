@@ -19,28 +19,33 @@ namespace HolidayMakerGrupp2.Services
 
         public static async Task<IEnumerable<Accomodation>> Search(DateTime date, string city)
         {
-            List<Accomodation> accomodations = new();
             using var _context = new HolidayMakerGrupp2Context();
-            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).ToListAsync();
-            // Iterera genom listan med boenden
-            int bookedRoom = 0;
-
-            foreach (var a in acc)
+            List<Accomodation> availableHotels = new();
+            var bookingsInCity = await (from b in _context.Bookings.AsAsyncEnumerable()
+                                        where (b.Accomodations.City.Name.ToLower() == city.ToLower()) &&
+                                        (b.ArrivalDate.Date >= date.Date) && (b.DepartureDate.Date > date.Date)
+                                        select (b.Accomodations.Id)).ToListAsync();
+            foreach (var acc in _context.Accomodations)
             {
-                foreach (var book in a.Bookings)
+                int bookedRooms = 0;
+                if (bookingsInCity.Contains(acc.Id))
                 {
-                    if (book.ArrivalDate >= date && book.DepartureDate > date)
+                    foreach (int b in bookingsInCity)
                     {
-                        ++bookedRoom;
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
                     }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
                 }
-                if (bookedRoom < a.NrOfRooms)
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
                 {
-                    accomodations.Add(a);
+                    availableHotels.Add(acc);
                 }
             }
-
-            return accomodations;
+            return availableHotels;
         }
 
         public static async Task<IEnumerable<Accomodation>> Search(DateTime arrivalDate, DateTime departureDate, string city)

@@ -1,18 +1,13 @@
-﻿using System;
+﻿using HolidayMakerGrupp2.Models.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HolidayMakerGrupp2.Models.Database;
 
 namespace HolidayMakerGrupp2.Services
 {
     public static class CustomerService
     {
-        
-
-        
-
-
         public static async Task<IEnumerable<Customer>> Get()
         {
             using var ctx = new HolidayMakerGrupp2Context();
@@ -51,7 +46,7 @@ namespace HolidayMakerGrupp2.Services
             var customerToDelete = await ctx.Customers.AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
             ctx.Customers.Remove(customerToDelete);
             ctx.SaveChanges();
-            return customerToDelete; 
+            return customerToDelete;
         }
 
         public static async Task<int> AddCustomer(string firstName, string lastName, string address, string city, string email, string phoneNr, int zipcode)
@@ -60,11 +55,8 @@ namespace HolidayMakerGrupp2.Services
 
             Guid g = Guid.NewGuid();
 
-
             var createdCustomer = await ctx.Customers.AddAsync(new Customer
             {
-
-
                 Firstname = firstName,
                 Lastname = lastName,
                 Address = address,
@@ -73,10 +65,7 @@ namespace HolidayMakerGrupp2.Services
                 PhoneNr = phoneNr,
                 Zipcode = zipcode,
                 GuId = g.ToString()
-
-
-
-            }) ;
+            });
             ctx.SaveChanges();
             return createdCustomer.Entity.Id;
         }
@@ -119,6 +108,5 @@ namespace HolidayMakerGrupp2.Services
 
             return oldCustomer.Id;
         }
-
     }
 }

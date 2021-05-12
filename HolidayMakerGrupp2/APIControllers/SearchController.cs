@@ -21,19 +21,21 @@ namespace HolidayMakerGrupp2.APIControllers
         }
 
         // GET api/<SearchController>/5
-        [HttpGet("{city}")]
+        [HttpGet("byCity")]
         public async Task<IEnumerable<Accomodation>> Get(string city)
         {
             return await SearchService.Search(city);
         }
 
-        [HttpGet("{city}/{arrivalDate}")]
+        //api/search/byArrivalDate?arrivaldate=&city=
+        [HttpGet("byArrivalDate")]
         public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, string city)
         {
             return await SearchService.Search(arrivalDate, city);
         }
 
-        [HttpGet("{city}/{arrivalDate]/{departureDate}")]
+        //api/search/arrivalDeparture?arrivalDate=&departureDate=&city=
+        [HttpGet("arrivalDeparture")]
         public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, DateTime departureDate, string city)
         {
             return await SearchService.Search(arrivalDate, departureDate, city);
