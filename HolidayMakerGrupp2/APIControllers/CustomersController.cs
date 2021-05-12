@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HolidayMakerGrupp2.Models.Database;
+﻿using HolidayMakerGrupp2.Models.Database;
 using HolidayMakerGrupp2.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HolidayMakerGrupp2.APIControllers
 {
@@ -14,13 +10,8 @@ namespace HolidayMakerGrupp2.APIControllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-
-        
-
-
         public CustomersController()
         {
-
         }
 
         [HttpPost]
@@ -44,26 +35,24 @@ namespace HolidayMakerGrupp2.APIControllers
             }
             else
             {
-                return await CustomerService .GetByName(name);
+                return await CustomerService.GetByName(name);
             }
         }
-
-        
 
         [HttpPut]
         public async Task<int> UpdateCustomer(int id, string firstname, string lastName, string email, string address, string city, string phonenr, int zipcode)
         {
-            Customer customer = new Customer() { 
-                Firstname = firstname, 
+            Customer customer = new Customer()
+            {
+                Firstname = firstname,
                 Lastname = lastName,
                 Email = email,
-                Address = address, 
+                Address = address,
                 City = city,
-                PhoneNr = phonenr, 
-                Zipcode = zipcode};
+                PhoneNr = phonenr,
+                Zipcode = zipcode
+            };
             return await CustomerService.ChangeCustomer(id, customer);
         }
-
-        
     }
 }

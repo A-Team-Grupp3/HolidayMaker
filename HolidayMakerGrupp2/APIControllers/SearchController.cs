@@ -15,9 +15,9 @@ namespace HolidayMakerGrupp2.APIControllers
     public class SearchController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<Accomodation>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await SearchService.Search();
         }
         //[HttpGet("{city}")]
         //public async Task<IEnumerable<Accomodation>> GetByCity(string city)
@@ -51,8 +51,25 @@ namespace HolidayMakerGrupp2.APIControllers
         }
         [HttpGet("{date}/{city}")]
         public async Task<IEnumerable<Accomodation>> GetByDateAndCity(DateTime date, string city)
+        // GET api/<SearchController>/5
+        [HttpGet("byCity")]
+        public async Task<IEnumerable<Accomodation>> Get(string city)
         {
-            return await SearchService.SearchByDate(date, city);
+            return await SearchService.Search(city);
+        }
+
+        //api/search/byArrivalDate?arrivaldate=&city=
+        [HttpGet("byArrivalDate")]
+        public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, string city)
+        {
+            return await SearchService.Search(arrivalDate, city);
+        }
+
+        //api/search/arrivalDeparture?arrivalDate=&departureDate=&city=
+        [HttpGet("arrivalDeparture")]
+        public async Task<IEnumerable<Accomodation>> Get(DateTime arrivalDate, DateTime departureDate, string city)
+        {
+            return await SearchService.Search(arrivalDate, departureDate, city);
         }
     }
 }
