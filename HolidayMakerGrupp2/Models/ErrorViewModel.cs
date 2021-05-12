@@ -1,5 +1,3 @@
-using System;
-
 namespace HolidayMakerGrupp2.Models
 {
     public class ErrorViewModel

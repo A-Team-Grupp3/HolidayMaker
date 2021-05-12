@@ -1,10 +1,8 @@
 ﻿using HolidayMakerGrupp2.Models.Database;
 using HolidayMakerGrupp2.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HolidayMakerGrupp2.APIControllers
@@ -15,7 +13,6 @@ namespace HolidayMakerGrupp2.APIControllers
     {
         public BookingsController()
         {
-
         }
 
         [HttpGet]
@@ -49,7 +46,7 @@ namespace HolidayMakerGrupp2.APIControllers
         {
             Booking booking = new Booking()
             {
-                ArrivalDate= arrival,
+                ArrivalDate = arrival,
                 DepartureDate = departure,
                 NrOfGuests = nrOfGuests,
                 NrOfKids = nrOfKids,
