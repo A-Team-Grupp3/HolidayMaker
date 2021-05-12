@@ -23,15 +23,7 @@ namespace HolidayMakerGrupp2.Services
   public static async Task<IEnumerable<Customer>> GetByName(string name)
   {
    using var ctx = new HolidayMakerGrupp2Context();
-
-   if (string.IsNullOrWhiteSpace(name))
-   {
-    return await ctx.Customers.ToListAsync();
-   }
-   else
-   {
     return await ctx.Customers.AsAsyncEnumerable().Where(c => c.Firstname.ToLower().Contains(name)).ToListAsync();
-   }
   }
 
   public static async Task<Customer> DeleteCustomer(int id)

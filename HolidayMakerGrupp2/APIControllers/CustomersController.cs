@@ -20,7 +20,7 @@ namespace HolidayMakerGrupp2.APIControllers
    var createdCustomer = await CustomerService.AddCustomer(customer);
    if (createdCustomer != null)
    {
-    return Created("", createdCustomer);
+    return Created("AddCustomer", createdCustomer);
    }
    // TODO: gör mer specifik felhantering
    return BadRequest();
@@ -69,7 +69,7 @@ namespace HolidayMakerGrupp2.APIControllers
    {
     return Ok(deletedCustomer);
    }
-   return BadRequest();
+   return NotFound();
   }
  }
 }
