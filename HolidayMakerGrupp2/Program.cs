@@ -9,7 +9,7 @@ namespace HolidayMakerGrupp2
     {
         public static void Main(string[] args)
         {
-            CreateDB();
+            //CreateDB();
             CreateHostBuilder(args).Build().Run();
         }
 
