@@ -166,7 +166,7 @@ namespace HolidayMakerGrupp2.Services
         {
             using var _context = new HolidayMakerGrupp2Context();
             List<Accomodation> availableHotels = new();
-            var accList = await _context.Accomodations.AsAsyncEnumerable().ToListAsync();
+            var accList = await _context.Accomodations.AsQueryable().Include(c => c.City).ToListAsync();
             var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
             foreach (var acc in accList)
             {
