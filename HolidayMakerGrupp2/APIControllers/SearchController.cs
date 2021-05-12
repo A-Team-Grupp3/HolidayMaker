@@ -24,8 +24,8 @@ namespace HolidayMakerGrupp2.APIControllers
 
         //}
 
-        //GET api/<SearchController>/5
-        [HttpGet("{city}")]
+        //GET api/search/byCityAndDistance?city=Malmö&distanceToBeach=0&distanceToCity=0.5
+        [HttpGet("byCityAndDistance")]
         public async Task<IEnumerable<Accomodation>> GetByCityAndDistance(string city, float distanceToBeach, float distanceToCity)
         {
             if (distanceToBeach > 0.0 && distanceToCity > 0.0)
@@ -46,7 +46,7 @@ namespace HolidayMakerGrupp2.APIControllers
             }
         }
 
-        // GET api/<SearchController>/5
+        // GET api/search/byCity?city=Malmö
         [HttpGet("byCity")]
         public async Task<IEnumerable<Accomodation>> Get(string city)
         {
