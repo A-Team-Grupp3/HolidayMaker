@@ -22,10 +22,7 @@ namespace HolidayMakerGrupp2.Services
             using var _context = new HolidayMakerGrupp2Context();
             List<Accomodation> availableHotels = new();
             var accList = await _context.Accomodations.Include(c => c.City).ToListAsync();
-            var bookingsInCity = await (from b in _context.Bookings.AsQueryable()
-                                        where (b.Accomodations.City.Name.ToLower() == city.ToLower()) &&
-                                        (b.ArrivalDate.Date >= date.Date) && (b.DepartureDate.Date > date.Date)
-                                        select (b.Accomodations.Id)).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(date, null, city, _context);
             foreach (var acc in accList)
             {
                 int bookedRooms = 0;
@@ -47,7 +44,7 @@ namespace HolidayMakerGrupp2.Services
                     availableHotels.Add(acc);
                 }
             }
-            
+
             return availableHotels;
         }
 
@@ -55,12 +52,8 @@ namespace HolidayMakerGrupp2.Services
         {
             using var _context = new HolidayMakerGrupp2Context();
             List<Accomodation> availableHotels = new();
-            var accList = await _context.Accomodations.Include(c => c.City).ToListAsync();
-            var bookingsInCity = await (from b in _context.Bookings.AsQueryable()
-                                        where (b.Accomodations.City.Name.ToLower() == city.ToLower()) &&
-                                        (b.ArrivalDate.Date >= arrivalDate.Date) && (b.DepartureDate.Date > arrivalDate.Date) &&
-                                        (b.ArrivalDate.Date >= departureDate && b.DepartureDate > departureDate)
-                                        select (b.Accomodations.Id)).ToListAsync();
+            var accList = await _context.Accomodations.AsAsyncEnumerable().ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
             foreach (var acc in accList)
             {
                 int bookedRooms = 0;
@@ -89,6 +82,25 @@ namespace HolidayMakerGrupp2.Services
         {
             using HolidayMakerGrupp2Context _context = new();
             return await _context.Accomodations.AsQueryable().ToListAsync();
+        }
+
+        private static async Task<IEnumerable<int>> GetBookingsAsync(DateTime arrivalDate, DateTime? departureDate, string city, HolidayMakerGrupp2Context _context)
+        {
+            if (departureDate == null)
+            {
+                return await (from b in _context.Bookings.AsQueryable()
+                              where (b.Accomodations.City.Name.ToLower() == city.ToLower()) &&
+                              (b.ArrivalDate.Date >= arrivalDate.Date) && (b.DepartureDate.Date > arrivalDate.Date)
+                              select (b.Accomodations.Id)).ToListAsync();
+            }
+            else
+            {
+                return await (from b in _context.Bookings.AsQueryable()
+                              where (b.Accomodations.City.Name.ToLower() == city.ToLower()) &&
+                              (b.ArrivalDate.Date >= arrivalDate.Date) && (b.DepartureDate.Date > arrivalDate.Date) &&
+                              (b.ArrivalDate.Date >= departureDate && b.DepartureDate > departureDate)
+                              select (b.Accomodations.Id)).ToListAsync();
+            }
         }
     }
 }
