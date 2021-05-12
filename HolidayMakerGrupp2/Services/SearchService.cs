@@ -12,7 +12,35 @@ namespace HolidayMakerGrupp2.Services
         public static async Task<IEnumerable<Accomodation>> Search(string city)
         {
             using var _context = new HolidayMakerGrupp2Context();
+<<<<<<<<< Temporary merge branch 1
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).ToListAsync();
+
+            return acc;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> SearchByCityAndDistanceToCity(string city, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).Where(d => d.DistanceDowntown <= distanceToCity).ToListAsync();
+
+            return acc;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> SearchByCityAndDistanceToBeach(string city, float distancToBeach)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).Where(d => d.DistanceBeach <= distancToBeach).ToListAsync();
+
+            return acc;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> SearchByCityAndDistanceToBeachAndToCity(string city, float distancToBeach, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            var acc = await _context.Accomodations.AsQueryable().Where(c => c.City.Name == city).Where(d => d.DistanceBeach <= distancToBeach).Where(t => t.DistanceDowntown <= distanceToCity).ToListAsync();
+=========
             var acc = await _context.Accomodations.AsQueryable().Where(a => a.City.Name.ToLower() == city.ToLower()).ToListAsync();
+>>>>>>>>> Temporary merge branch 2
 
             return acc;
         }
