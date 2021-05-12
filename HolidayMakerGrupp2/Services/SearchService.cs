@@ -47,8 +47,7 @@ namespace HolidayMakerGrupp2.Services
                     availableHotels.Add(acc);
                 }
             }
-            ((rb.Booking.ArrivalDate >= arrivalDate && rb.Booking.DepartureDate > arrivalDate) &&
-                            (rb.Booking.ArrivalDate >= departureDate && rb.Booking.DepartureDate > departureDate))
+            
             return availableHotels;
         }
 
