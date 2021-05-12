@@ -71,11 +71,192 @@ namespace HolidayMakerGrupp2.Services
             return availableHotels;
         }
 
+        public static async Task<IEnumerable<Accomodation>> Search(DateTime date, string city, float distanceToBeach)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceBeach <= distanceToBeach).Include(c => c.City).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(date, null, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+            
+            return availableHotels;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> SearchByCity(DateTime date, string city, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceDowntown <= distanceToCity).Include(c => c.City).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(date, null, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+            
+            return availableHotels;
+        }
+        public static async Task<IEnumerable<Accomodation>> Search(DateTime date, string city, float distanceToBeach, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceBeach <= distanceToBeach && c.DistanceDowntown <= distanceToCity).Include(c => c.City).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(date, null, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+          
+            return availableHotels;
+        }
         public static async Task<IEnumerable<Accomodation>> Search(DateTime arrivalDate, DateTime departureDate, string city)
         {
             using var _context = new HolidayMakerGrupp2Context();
             List<Accomodation> availableHotels = new();
             var accList = await _context.Accomodations.AsAsyncEnumerable().ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+            return availableHotels;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> Search(DateTime arrivalDate, DateTime departureDate, string city, float distanceToBeach)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceBeach <= distanceToBeach).Include(c => c.City).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+            return availableHotels;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> SearchDistanceToCity(DateTime arrivalDate, DateTime departureDate, string city, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceDowntown <= distanceToCity).Include(c => c.City).ToListAsync();
+            var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
+            foreach (var acc in accList)
+            {
+                int bookedRooms = 0;
+
+                if (bookingsInCity.Contains(acc.Id))
+                {
+                    foreach (int b in bookingsInCity)
+                    {
+                        if (b == acc.Id)
+                        {
+                            bookedRooms++;
+                        }
+                    }
+                    if (bookedRooms < acc.NrOfRooms)
+                        availableHotels.Add(acc);
+                }
+                if (!availableHotels.Contains(acc) && acc.City.Name == city)
+                {
+                    availableHotels.Add(acc);
+                }
+            }
+            return availableHotels;
+        }
+
+        public static async Task<IEnumerable<Accomodation>> Search(DateTime arrivalDate, DateTime departureDate, string city, float distanceToBeach, float distanceToCity)
+        {
+            using var _context = new HolidayMakerGrupp2Context();
+            List<Accomodation> availableHotels = new();
+            var accList = await _context.Accomodations.AsQueryable().Where(c => c.DistanceBeach <= distanceToBeach && c.DistanceDowntown <= distanceToCity).Include(c => c.City).ToListAsync();
             var bookingsInCity = await GetBookingsAsync(arrivalDate, departureDate, city, _context);
             foreach (var acc in accList)
             {
