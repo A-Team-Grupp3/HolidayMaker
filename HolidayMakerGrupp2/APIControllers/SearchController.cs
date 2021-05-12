@@ -20,6 +20,32 @@ namespace HolidayMakerGrupp2.APIControllers
             return await SearchService.Search();
         }
 
+        //    return await SearchService.SearchByCity(city);
+
+        //}
+
+        //GET api/<SearchController>/5
+        [HttpGet("{city}")]
+        public async Task<IEnumerable<Accomodation>> GetByCityAndDistance(string city, float distanceToBeach, float distanceToCity)
+        {
+            if (distanceToBeach > 0.0 && distanceToCity > 0.0)
+            {
+                return await SearchService.SearchByCityAndDistanceToBeachAndToCity(city, distanceToBeach, distanceToCity);
+            }
+            else if (distanceToCity > 0.0)
+            {
+                return await SearchService.SearchByCityAndDistanceToCity(city, distanceToCity);
+            }
+            else if (distanceToBeach > 0.0)
+            {
+                return await SearchService.SearchByCityAndDistanceToBeach(city, distanceToBeach);
+            }
+            else
+            {
+                return await SearchService.Search(city);
+            }
+        }
+
         // GET api/<SearchController>/5
         [HttpGet("byCity")]
         public async Task<IEnumerable<Accomodation>> Get(string city)
