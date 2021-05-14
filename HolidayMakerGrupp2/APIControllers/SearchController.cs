@@ -20,7 +20,7 @@ namespace HolidayMakerGrupp2.APIControllers
             return await SearchService.Search();
         }
 
-       
+       //
 
         //api/search/arrivalDeparture?arrivalDate=&departureDate=&city=
         [HttpGet("search")]
