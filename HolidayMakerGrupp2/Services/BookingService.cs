@@ -1,4 +1,5 @@
 ﻿using HolidayMakerGrupp2.Models.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,12 @@ namespace HolidayMakerGrupp2.Services
         {
             using var ctx = new HolidayMakerGrupp2Context();
 
-            var bookingToDelete = await ctx.Bookings.AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
+            var bookingToDelete = await ctx.Bookings.Include(rb => rb.RoomInBookings).AsAsyncEnumerable().Where(c => c.Id == id).SingleAsync();
+
+            var roomInBooking = bookingToDelete.RoomInBookings;
+            ctx.RoomInBookings.Remove(roomInBooking.First());
             ctx.Bookings.Remove(bookingToDelete);
+
             await ctx.SaveChangesAsync();
             return bookingToDelete;
         }
